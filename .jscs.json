@@ -1,0 +1,29 @@
+{
+  "preset": "google",
+  "fileExtensions": [
+    ".js",
+    ".jsx",
+    ".jscs"
+  ],
+  "requireSemicolons": true,
+  "requireParenthesesAroundIIFE": true,
+  "requireLineFeedAtFileEnd": false,
+  "maximumLineLength": 180,
+  "validateLineBreaks": "LF",
+  "validateIndentation": 4,
+  "validateQuoteMarks": "\"",
+  "disallowTrailingComma": true,
+  "disallowSpacesInsideObjectBrackets": null,
+  "disallowImplicitTypeConversion": [
+    "string"
+  ],
+  "disallowKeywords": [
+    "var"
+  ],
+  "disallowKeywordsOnNewLine": [],
+  "maxErrors": 100,
+  "safeContextKeyword": "self",
+  "excludeFiles": [
+    "test/**"
+  ]
+}
