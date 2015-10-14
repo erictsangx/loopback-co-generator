@@ -5,6 +5,7 @@ This demo project shows how to use co & ES6 generator to avoid javascript callba
 <li>LoopBack API server</li>
 <li>Co, ES6 Generator</li>
 <li>Thunkify / ES6 Promise</li>
+<li>Typescript</li>
 </ul>
 
 ###scripts
