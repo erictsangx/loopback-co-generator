@@ -1,10 +1,16 @@
 "use strict";
+
 const co = require("co");
 const thunkify = require("thunkify");
-module.exports = (PeopleModel) => {
-    const find = (id) => {
-        return new Promise((resolve, reject) => {
-            PeopleModel.findById(id, (err, instance) => {
+
+module.exports = (PeopleModel: IModel) => {
+
+    /*
+     ES6 Promise
+     */
+    const find = (id: number) => {
+        return new Promise((resolve: Function, reject: Function)=> {
+            PeopleModel.findById(id, (err: Error, instance: IPeople) => {
                 if (err) {
                     reject(err);
                 }
@@ -14,9 +20,15 @@ module.exports = (PeopleModel) => {
             });
         });
     };
+
+    /*
+     thunkify
+     */
     PeopleModel.findById = thunkify(PeopleModel.findById);
     PeopleModel.create = thunkify(PeopleModel.create);
-    PeopleModel.getFriend = (id, cb) => {
+
+    PeopleModel.getFriend = (id: number, cb: Function) => {
+
         /*
          traditional callback hell
          */
@@ -35,7 +47,9 @@ module.exports = (PeopleModel) => {
         //        });
         //    }
         //});
-        co(function* () {
+
+        co(function*(): IterableIterator<any> {
+            //create test data
             yield PeopleModel.create([
                 {
                     id: 1,
@@ -48,20 +62,28 @@ module.exports = (PeopleModel) => {
                     fid: 1
                 }
             ]);
+
+            ////with promise
             const targetOfPromise = yield find(id);
             const friendOfPromise = yield find(targetOfPromise.fid);
             console.info(targetOfPromise, friendOfPromise);
+
+            ////with thunkify
             const target = yield PeopleModel.findById(id);
             const friend = yield PeopleModel.findById(target.fid);
             cb(null, friend);
-        }).catch((error) => {
+        }).catch((error: Error) => {
             cb(null, error);
         });
+
     };
-    PeopleModel.remoteMethod("getFriend", {
-        http: { path: "/getFriend", verb: "get" },
-        accepts: { arg: "id", type: "number", http: { source: "query" } },
-        returns: { arg: "name", type: "string" }
-    });
+
+    PeopleModel.remoteMethod(
+        "getFriend",
+        {
+            http: {path: "/getFriend", verb: "get"},
+            accepts: {arg: "id", type: "number", http: {source: "query"}},
+            returns: {arg: "name", type: "string"}
+        }
+    );
 };
-//# sourceMappingURL=people.js.map

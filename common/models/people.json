@@ -12,7 +12,7 @@
       "required": true
     },
     "fid": {
-      "type": "string",
+      "type": "number",
       "required": true
     }
   },
